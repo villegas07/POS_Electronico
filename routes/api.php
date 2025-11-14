@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProveedorController;
+use App\Http\Controllers\Api\ClienteController;
 
 Route::apiResource('proveedores', ProveedorController::class)
 	->parameters(['proveedores' => 'proveedor'])
@@ -11,6 +12,16 @@ Route::apiResource('proveedores', ProveedorController::class)
 		'show' => 'api.proveedores.show',
 		'update' => 'api.proveedores.update',
 		'destroy' => 'api.proveedores.destroy',
+	]);
+
+Route::apiResource('clientes', ClienteController::class)
+	->parameters(['clientes' => 'cliente'])
+	->names([
+		'index' => 'api.clientes.index',
+		'store' => 'api.clientes.store',
+		'show' => 'api.clientes.show',
+		'update' => 'api.clientes.update',
+		'destroy' => 'api.clientes.destroy',
 	]);
 
 Route::apiResource('productos', \App\Http\Controllers\Api\ProductoController::class)

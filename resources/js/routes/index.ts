@@ -589,6 +589,80 @@ proveedores.form = proveedoresForm
 
 /**
 * @see routes/web.php:31
+* @route '/clientes'
+*/
+export const clientes = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: clientes.url(options),
+    method: 'get',
+})
+
+clientes.definition = {
+    methods: ["get","head"],
+    url: '/clientes',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see routes/web.php:31
+* @route '/clientes'
+*/
+clientes.url = (options?: RouteQueryOptions) => {
+    return clientes.definition.url + queryParams(options)
+}
+
+/**
+* @see routes/web.php:31
+* @route '/clientes'
+*/
+clientes.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: clientes.url(options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:31
+* @route '/clientes'
+*/
+clientes.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: clientes.url(options),
+    method: 'head',
+})
+
+/**
+* @see routes/web.php:31
+* @route '/clientes'
+*/
+const clientesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: clientes.url(options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:31
+* @route '/clientes'
+*/
+clientesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: clientes.url(options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:31
+* @route '/clientes'
+*/
+clientesForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: clientes.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+clientes.form = clientesForm
+
+/**
+* @see routes/web.php:35
 * @route '/test'
 */
 export const test = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -602,7 +676,7 @@ test.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see routes/web.php:31
+* @see routes/web.php:35
 * @route '/test'
 */
 test.url = (options?: RouteQueryOptions) => {
@@ -610,7 +684,7 @@ test.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see routes/web.php:31
+* @see routes/web.php:35
 * @route '/test'
 */
 test.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -619,7 +693,7 @@ test.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see routes/web.php:31
+* @see routes/web.php:35
 * @route '/test'
 */
 test.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -628,7 +702,7 @@ test.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see routes/web.php:31
+* @see routes/web.php:35
 * @route '/test'
 */
 const testForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -637,7 +711,7 @@ const testForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 /**
-* @see routes/web.php:31
+* @see routes/web.php:35
 * @route '/test'
 */
 testForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -646,7 +720,7 @@ testForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 /**
-* @see routes/web.php:31
+* @see routes/web.php:35
 * @route '/test'
 */
 testForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

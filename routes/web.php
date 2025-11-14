@@ -28,6 +28,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('proveedores');
     })->name('proveedores');
 
+    Route::get('clientes', function () {
+        return Inertia::render('clientes');
+    })->name('clientes');
+
     Route::get('test', function () {
         return Inertia::render('test');
     })->name('test');

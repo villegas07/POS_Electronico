@@ -145,22 +145,26 @@ export default function Dashboard() {
                         {topProducts.length === 0 ? (
                             <p className="text-sm text-muted-foreground">Sin productos</p>
                         ) : (
-                            topProducts.map((p: any, i: number) => (
-                                <div key={p.id} className="flex items-center justify-between border-b py-2 last:border-0">
-                                    <div className="flex items-center gap-3">
-                                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100">
-                                            <span className="text-sm font-semibold text-gray-600">{i + 1}</span>
+                            topProducts.map((p: any, i: number) => {
+                                const precioConIva = (parseFloat(p.precio_venta || 0) * (1 + parseFloat(p.iva_porcentaje || 0) / 100));
+                                return (
+                                    <div key={p.id} className="flex items-center justify-between border-b py-2 last:border-0">
+                                        <div className="flex items-center gap-3">
+                                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100">
+                                                <span className="text-sm font-semibold text-gray-600">{i + 1}</span>
+                                            </div>
+                                            <div>
+                                                <p className="font-medium">{p.nombre}</p>
+                                                <p className="text-xs text-muted-foreground">SKU: {p.sku || 'N/A'}</p>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <p className="font-medium">{p.nombre}</p>
-                                            <p className="text-xs text-muted-foreground">SKU: {p.sku || 'N/A'}</p>
+                                        <div className="text-right">
+                                            <p className="font-semibold">${formatPrice(precioConIva)}</p>
+                                            <p className="text-xs text-muted-foreground">+{p.iva_porcentaje || 0}% IVA</p>
                                         </div>
                                     </div>
-                                    <div className="text-right">
-                                        <p className="font-semibold">${formatPrice(p.precio_venta)}</p>
-                                    </div>
-                                </div>
-                            ))
+                                );
+                            })
                         )}
                     </div>
                 </Card>

@@ -6,9 +6,10 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { X, Plus, ShoppingCart, Trash2 } from 'lucide-react';
+import { X, Plus, ShoppingCart, Trash2, Users } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
+import { QuickClienteModal } from '@/components/quick-cliente-modal';
 import { showSuccess, showError, showValidationError } from '@/utils/alerts';
 
 const breadcrumbs: BreadcrumbItem[] = [{ title: 'POS', href: '/pos' }];
@@ -35,6 +36,11 @@ export default function PosPage() {
     const [paymentMethod, setPaymentMethod] = useState('efectivo');
     const [processingPayment, setProcessingPayment] = useState(false);
     
+    // Cliente
+    const [clientes, setClientes] = useState<any[]>([]);
+    const [selectedCliente, setSelectedCliente] = useState<string>('default');
+    const [showClienteModal, setShowClienteModal] = useState(false);
+    
     // Descuento
     const [applyDiscount, setApplyDiscount] = useState(false);
     const [discountPercentage, setDiscountPercentage] = useState(0);
@@ -56,6 +62,16 @@ export default function PosPage() {
             .catch(() => {
                 setProducts([]);
                 setLoading(false);
+            });
+        
+        // Cargar clientes
+        fetch('/api/clientes')
+            .then((r) => r.json())
+            .then((data) => {
+                setClientes(Array.isArray(data) ? data : []);
+            })
+            .catch(() => {
+                setClientes([]);
             });
     }, []);
 
@@ -258,6 +274,40 @@ export default function PosPage() {
 
                 {/* Carrito y Pago */}
                 <div className="overflow-y-auto flex flex-col gap-4">
+                    {/* Selección de Cliente */}
+                    <Card className="p-4">
+                        <div className="space-y-3">
+                            <div className="flex items-center gap-2">
+                                <Users className="h-5 w-5" />
+                                <h3 className="text-lg font-semibold">Cliente</h3>
+                            </div>
+                            <div className="space-y-2">
+                                <Select value={selectedCliente} onValueChange={setSelectedCliente}>
+                                    <SelectTrigger className="w-full">
+                                        <SelectValue placeholder="Selecciona un cliente..." />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="default">Cliente Predeterminado</SelectItem>
+                                        {clientes.map((cliente) => (
+                                            <SelectItem key={cliente.id} value={cliente.id.toString()}>
+                                                {cliente.nombre} - {cliente.documento}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                <Button 
+                                    variant="outline" 
+                                    size="sm"
+                                    className="w-full"
+                                    onClick={() => setShowClienteModal(true)}
+                                >
+                                    <Plus className="h-4 w-4 mr-2" />
+                                    Registrar Cliente Rápido
+                                </Button>
+                            </div>
+                        </div>
+                    </Card>
+
                     {/* Carrito */}
                     <Card className="p-4 flex-1 overflow-y-auto">
                         <div className="flex items-center gap-2 mb-4">
@@ -466,6 +516,16 @@ export default function PosPage() {
                         </Card>
                     )}
                 </div>
+
+                <QuickClienteModal 
+                    open={showClienteModal}
+                    onOpenChange={setShowClienteModal}
+                    onClienteCreated={(cliente) => {
+                        setClientes([...clientes, cliente]);
+                        setSelectedCliente(cliente.id.toString());
+                        showSuccess('Cliente registrado', 'El cliente se ha agregado a la lista');
+                    }}
+                />
             </div>
         </AppLayout>
     );
