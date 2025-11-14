@@ -55,6 +55,13 @@
   - Pagos combinados
 - ✅ Recibos digitales
 
+### 🎨 Modo de Apariencia
+- ✅ **Modo Sistema**: Respeta la preferencia de tu sistema operativo
+- ✅ **Modo Claro**: Interfaz clara y bien iluminada
+- ✅ **Modo Oscuro**: Interfaz oscura para reducir fatiga visual
+- ✅ Toggle rápido en el header de la aplicación
+- ✅ Persistencia de preferencia en localStorage y cookies
+
 ### 📦 Gestión de Productos
 - ✅ CRUD completo de productos
 - ✅ Control de stock en tiempo real

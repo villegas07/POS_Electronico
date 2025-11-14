@@ -17,6 +17,7 @@ type CartItem = {
     id: number;
     nombre: string;
     precio_venta: number;
+    precio_venta_con_iva: number;
     iva_porcentaje: number;
     quantity: number;
 };
@@ -71,6 +72,9 @@ export default function PosPage() {
         const ivaPercent = typeof product.iva_porcentaje === 'string'
             ? parseFloat(product.iva_porcentaje)
             : product.iva_porcentaje || 0;
+        
+        // Calcular precio con IVA incluido
+        const precioVentaConIva = precioVenta * (1 + ivaPercent / 100);
             
         const existing = cart.find((item) => item.id === product.id);
         if (existing) {
@@ -80,6 +84,7 @@ export default function PosPage() {
                 id: product.id,
                 nombre: product.nombre,
                 precio_venta: precioVenta,
+                precio_venta_con_iva: precioVentaConIva,
                 iva_porcentaje: ivaPercent,
                 quantity: 1,
             }]);
@@ -239,7 +244,7 @@ export default function PosPage() {
                                             <p className="text-sm text-muted-foreground">SKU: {product.sku || 'N/A'}</p>
                                         </div>
                                         <div className="w-full flex items-end justify-between mt-2">
-                                            <p className="text-lg font-bold">${Number(product.precio_venta || 0).toFixed(2)}</p>
+                                            <p className="text-lg font-bold">${(Number(product.precio_venta || 0) * (1 + Number(product.iva_porcentaje || 0) / 100)).toFixed(2)}</p>
                                             <Button size="sm">
                                                 <Plus className="h-4 w-4" />
                                             </Button>
@@ -268,7 +273,7 @@ export default function PosPage() {
                                         <div className="flex items-start justify-between">
                                             <div className="flex-1">
                                                 <p className="font-medium text-sm">{item.nombre}</p>
-                                                <p className="text-xs text-muted-foreground">${item.precio_venta.toFixed(2)}</p>
+                                                <p className="text-xs text-muted-foreground">${item.precio_venta_con_iva.toFixed(2)}</p>
                                             </div>
                                             <Button variant="ghost" size="sm" onClick={() => removeFromCart(item.id)}>
                                                 <X className="h-4 w-4" />
@@ -372,7 +377,7 @@ export default function PosPage() {
                                         </Select>
 
                                         {paymentMethod === 'efectivo' && (
-                                            <div className="bg-blue-50 p-2 rounded-lg space-y-2">
+                                            <div className="bg-blue-50 dark:bg-blue-950 p-2 rounded-lg space-y-2">
                                                 <Input 
                                                     type="number"
                                                     min="0"
@@ -382,9 +387,9 @@ export default function PosPage() {
                                                     placeholder="Monto recibido"
                                                     className="h-8 text-sm"
                                                 />
-                                                <div className="bg-white p-2 rounded border border-blue-200">
-                                                    <p className="text-xs text-gray-600">Cambio:</p>
-                                                    <p className={`text-xl font-bold ${amountReceived >= finalTotal ? 'text-green-600' : 'text-red-600'}`}>
+                                                <div className="bg-white dark:bg-neutral-800 p-2 rounded border border-blue-200 dark:border-blue-800">
+                                                    <p className="text-xs text-gray-600 dark:text-gray-400">Cambio:</p>
+                                                    <p className={`text-xl font-bold ${amountReceived >= finalTotal ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
                                                         ${(amountReceived - finalTotal).toFixed(2)}
                                                     </p>
                                                 </div>
@@ -436,7 +441,7 @@ export default function PosPage() {
                                             <Plus className="h-3 w-3 mr-1" />
                                             Agregar pago
                                         </Button>
-                                        <div className="text-xs p-2 bg-blue-50 rounded">
+                                        <div className="text-xs p-2 bg-blue-50 dark:bg-blue-950 rounded">
                                             <p>Total pagado: <strong>${combinedPayments.reduce((s, p) => s + p.monto, 0).toFixed(2)}</strong></p>
                                             <p>Falta: <strong>${(finalTotal - combinedPayments.reduce((s, p) => s + p.monto, 0)).toFixed(2)}</strong></p>
                                         </div>

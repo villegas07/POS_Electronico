@@ -42,7 +42,7 @@ const handleSystemThemeChange = () => {
 
 export function initializeTheme() {
     const savedAppearance =
-        (localStorage.getItem('appearance') as Appearance) || 'light';
+        (localStorage.getItem('appearance') as Appearance) || 'system';
 
     applyTheme(savedAppearance);
 
@@ -71,7 +71,7 @@ export function useAppearance() {
         ) as Appearance | null;
 
         // eslint-disable-next-line react-hooks/set-state-in-effect
-        updateAppearance(savedAppearance || 'light');
+        updateAppearance(savedAppearance || 'system');
 
         return () =>
             mediaQuery()?.removeEventListener(
