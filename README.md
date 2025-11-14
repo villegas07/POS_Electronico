@@ -547,13 +547,14 @@ Para solicitar permisos especiales o licencias, contacta al propietario del proy
 
 ## 👨‍💻 Autor
 
-**Brayan** - Desarrollador Full Stack
-
+**Brayan Villegas** - Desarrollador Full Stack  
+[Portafolio]([https://tu-portafolio.com](https://portafolio-9d3ca.web.app/))  
+[LinkedIn](www.linkedin.com/in/brayanvillegascorrales-943806260)
 ---
 
 ## 📞 Contacto
 
-Para preguntas o sugerencias, contacta al equipo de desarrollo.
+Correo electrónico: (brayanvillegas0719@gmail.com)
 
 ---
 
