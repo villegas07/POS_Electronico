@@ -663,6 +663,154 @@ clientes.form = clientesForm
 
 /**
 * @see routes/web.php:35
+* @route '/facturas'
+*/
+export const facturas = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: facturas.url(options),
+    method: 'get',
+})
+
+facturas.definition = {
+    methods: ["get","head"],
+    url: '/facturas',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see routes/web.php:35
+* @route '/facturas'
+*/
+facturas.url = (options?: RouteQueryOptions) => {
+    return facturas.definition.url + queryParams(options)
+}
+
+/**
+* @see routes/web.php:35
+* @route '/facturas'
+*/
+facturas.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: facturas.url(options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:35
+* @route '/facturas'
+*/
+facturas.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: facturas.url(options),
+    method: 'head',
+})
+
+/**
+* @see routes/web.php:35
+* @route '/facturas'
+*/
+const facturasForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: facturas.url(options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:35
+* @route '/facturas'
+*/
+facturasForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: facturas.url(options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:35
+* @route '/facturas'
+*/
+facturasForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: facturas.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+facturas.form = facturasForm
+
+/**
+* @see routes/web.php:39
+* @route '/factus-settings'
+*/
+export const factusSettings = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: factusSettings.url(options),
+    method: 'get',
+})
+
+factusSettings.definition = {
+    methods: ["get","head"],
+    url: '/factus-settings',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see routes/web.php:39
+* @route '/factus-settings'
+*/
+factusSettings.url = (options?: RouteQueryOptions) => {
+    return factusSettings.definition.url + queryParams(options)
+}
+
+/**
+* @see routes/web.php:39
+* @route '/factus-settings'
+*/
+factusSettings.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: factusSettings.url(options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:39
+* @route '/factus-settings'
+*/
+factusSettings.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: factusSettings.url(options),
+    method: 'head',
+})
+
+/**
+* @see routes/web.php:39
+* @route '/factus-settings'
+*/
+const factusSettingsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: factusSettings.url(options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:39
+* @route '/factus-settings'
+*/
+factusSettingsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: factusSettings.url(options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:39
+* @route '/factus-settings'
+*/
+factusSettingsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: factusSettings.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+factusSettings.form = factusSettingsForm
+
+/**
+* @see routes/web.php:43
 * @route '/test'
 */
 export const test = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -676,7 +824,7 @@ test.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see routes/web.php:35
+* @see routes/web.php:43
 * @route '/test'
 */
 test.url = (options?: RouteQueryOptions) => {
@@ -684,7 +832,7 @@ test.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see routes/web.php:35
+* @see routes/web.php:43
 * @route '/test'
 */
 test.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -693,7 +841,7 @@ test.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see routes/web.php:35
+* @see routes/web.php:43
 * @route '/test'
 */
 test.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -702,7 +850,7 @@ test.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see routes/web.php:35
+* @see routes/web.php:43
 * @route '/test'
 */
 const testForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -711,7 +859,7 @@ const testForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 /**
-* @see routes/web.php:35
+* @see routes/web.php:43
 * @route '/test'
 */
 testForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -720,7 +868,7 @@ testForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 /**
-* @see routes/web.php:35
+* @see routes/web.php:43
 * @route '/test'
 */
 testForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -734,3 +882,77 @@ testForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 test.form = testForm
+
+/**
+* @see routes/web.php:47
+* @route '/caja'
+*/
+export const caja = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: caja.url(options),
+    method: 'get',
+})
+
+caja.definition = {
+    methods: ["get","head"],
+    url: '/caja',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see routes/web.php:47
+* @route '/caja'
+*/
+caja.url = (options?: RouteQueryOptions) => {
+    return caja.definition.url + queryParams(options)
+}
+
+/**
+* @see routes/web.php:47
+* @route '/caja'
+*/
+caja.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: caja.url(options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:47
+* @route '/caja'
+*/
+caja.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: caja.url(options),
+    method: 'head',
+})
+
+/**
+* @see routes/web.php:47
+* @route '/caja'
+*/
+const cajaForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: caja.url(options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:47
+* @route '/caja'
+*/
+cajaForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: caja.url(options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:47
+* @route '/caja'
+*/
+cajaForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: caja.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+caja.form = cajaForm

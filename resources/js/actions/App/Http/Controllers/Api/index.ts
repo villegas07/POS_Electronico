@@ -6,6 +6,9 @@ import StockController from './StockController'
 import PosController from './PosController'
 import DevolucionController from './DevolucionController'
 import FactusController from './FactusController'
+import FactusAuthController from './FactusAuthController'
+import FactusInvoiceController from './FactusInvoiceController'
+import CajaController from './CajaController'
 
 const Api = {
     ProveedorController: Object.assign(ProveedorController, ProveedorController),
@@ -16,6 +19,9 @@ const Api = {
     PosController: Object.assign(PosController, PosController),
     DevolucionController: Object.assign(DevolucionController, DevolucionController),
     FactusController: Object.assign(FactusController, FactusController),
+    FactusAuthController: Object.assign(FactusAuthController, FactusAuthController),
+    FactusInvoiceController: Object.assign(FactusInvoiceController, FactusInvoiceController),
+    CajaController: Object.assign(CajaController, CajaController),
 }
 
 export default Api

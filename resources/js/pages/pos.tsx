@@ -386,7 +386,7 @@ export default function PosPage() {
                                         min="0"
                                         max="100"
                                         step="0.01"
-                                        value={discountPercentage}
+                                        value={discountPercentage === 0 ? '' : discountPercentage}
                                         onChange={(e) => setDiscountPercentage(parseFloat(e.target.value) || 0)}
                                         placeholder="% Descuento"
                                         className="h-8 text-sm"
@@ -432,7 +432,7 @@ export default function PosPage() {
                                                     type="number"
                                                     min="0"
                                                     step="0.01"
-                                                    value={amountReceived}
+                                                    value={amountReceived === 0 ? '' : amountReceived}
                                                     onChange={(e) => setAmountReceived(parseFloat(e.target.value) || 0)}
                                                     placeholder="Monto recibido"
                                                     className="h-8 text-sm"
@@ -467,7 +467,7 @@ export default function PosPage() {
                                                     type="number"
                                                     min="0"
                                                     step="0.01"
-                                                    value={payment.monto}
+                                                    value={payment.monto === 0 ? '' : payment.monto}
                                                     onChange={(e) => updateCombinedPayment(index, 'monto', parseFloat(e.target.value) || 0)}
                                                     placeholder="Monto"
                                                     className="h-8 text-sm flex-1"

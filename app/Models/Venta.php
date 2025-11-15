@@ -14,10 +14,26 @@ class Venta extends Model
     protected $fillable = [
         'usuario_id',
         'cliente_id',
+        'caja_id',
         'total',
         'impuesto',
         'estado',
     ];
+
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'usuario_id');
+    }
+
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class, 'cliente_id');
+    }
+
+    public function caja()
+    {
+        return $this->belongsTo(Caja::class, 'caja_id');
+    }
 
     public function items()
     {

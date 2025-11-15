@@ -250,7 +250,7 @@ export default function ProductosPage() {
                                             type="number" 
                                             min="0"
                                             step="1"
-                                            value={formData.cantidad_stock} 
+                                            value={formData.cantidad_stock === 0 ? '' : formData.cantidad_stock} 
                                             onChange={(e) => setFormData({ ...formData, cantidad_stock: parseInt(e.target.value) || 0 })} 
                                             required 
                                         />
@@ -264,7 +264,7 @@ export default function ProductosPage() {
                                                 type="number" 
                                                 step="0.01"
                                                 min="0"
-                                                value={formData.precio_costo} 
+                                                value={formData.precio_costo === 0 ? '' : formData.precio_costo} 
                                                 onChange={(e) => setFormData({ ...formData, precio_costo: parseFloat(e.target.value) || 0 })} 
                                                 required 
                                             />
@@ -276,7 +276,7 @@ export default function ProductosPage() {
                                                 type="number" 
                                                 step="0.01"
                                                 min="0"
-                                                value={formData.precio_venta} 
+                                                value={formData.precio_venta === 0 ? '' : formData.precio_venta} 
                                                 onChange={(e) => setFormData({ ...formData, precio_venta: parseFloat(e.target.value) || 0 })} 
                                                 required 
                                             />
@@ -316,7 +316,7 @@ export default function ProductosPage() {
                                                     type="number" 
                                                     step="0.01"
                                                     min="0"
-                                                    value={formData.iva_porcentaje} 
+                                                    value={formData.iva_porcentaje === 0 ? '' : formData.iva_porcentaje} 
                                                     onChange={(e) => setFormData({ ...formData, iva_porcentaje: parseFloat(e.target.value) || 0 })} 
                                                     required={formData.aplicar_iva}
                                                 />

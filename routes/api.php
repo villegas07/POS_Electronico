@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProveedorController;
 use App\Http\Controllers\Api\ClienteController;
+use App\Http\Controllers\Api\FactusInvoiceController;
+use App\Http\Controllers\Api\FactusAuthController;
 
 Route::apiResource('proveedores', ProveedorController::class)
 	->parameters(['proveedores' => 'proveedor'])
@@ -39,3 +41,17 @@ Route::get('productos/{producto}/stock', [\App\Http\Controllers\Api\StockControl
 Route::post('pos/ventas', [\App\Http\Controllers\Api\PosController::class, 'store']);
 Route::post('pos/ventas/{venta}/devoluciones', [\App\Http\Controllers\Api\DevolucionController::class, 'store']);
 Route::post('factus/invoices', [\App\Http\Controllers\Api\FactusController::class, 'store']);
+
+// Factus Authentication Routes
+Route::prefix('factus/auth')->group(function () {
+	Route::post('authenticate', [FactusAuthController::class, 'authenticate']);
+	Route::post('refresh', [FactusAuthController::class, 'refreshAccessToken']);
+	Route::get('status', [FactusAuthController::class, 'status']);
+});
+
+Route::apiResource('facturas', FactusInvoiceController::class)
+	->only(['index', 'show'])
+	->names([
+		'index' => 'api.facturas.index',
+		'show' => 'api.facturas.show',
+	]);

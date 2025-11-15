@@ -125,7 +125,7 @@ export default function StockAddCard({
                             type="number"
                             min="1"
                             step="1"
-                            value={cantidad}
+                            value={cantidad === 0 ? '' : cantidad}
                             onChange={(e) => setCantidad(parseInt(e.target.value) || 0)}
                             placeholder="0"
                             required

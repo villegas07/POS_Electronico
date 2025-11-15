@@ -13,7 +13,7 @@ import {
 import { dashboard, pos } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, ShoppingCart, Box, Users } from 'lucide-react';
+import { LayoutGrid, ShoppingCart, Box, Users, Receipt, Settings, CreditCard } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -42,18 +42,23 @@ const mainNavItems: NavItem[] = [
         href: '/clientes',
         icon: Users,
     },
+    {
+        title: 'Facturas',
+        href: '/facturas',
+        icon: Receipt,
+    },
 ];
 
 const footerNavItems: NavItem[] = [
     {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: Folder,
+        title: 'Caja',
+        href: '/caja',
+        icon: CreditCard,
     },
     {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
+        title: 'Configuración Factus',
+        href: '/factus-settings',
+        icon: Settings,
     },
 ];
 
