@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Api\PosController::store
-* @see app/Http/Controllers/Api/PosController.php:17
+* @see app/Http/Controllers/Api/PosController.php:19
 * @route '/api/pos/ventas'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Api\PosController::store
-* @see app/Http/Controllers/Api/PosController.php:17
+* @see app/Http/Controllers/Api/PosController.php:19
 * @route '/api/pos/ventas'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Api\PosController::store
-* @see app/Http/Controllers/Api/PosController.php:17
+* @see app/Http/Controllers/Api/PosController.php:19
 * @route '/api/pos/ventas'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Api\PosController::store
-* @see app/Http/Controllers/Api/PosController.php:17
+* @see app/Http/Controllers/Api/PosController.php:19
 * @route '/api/pos/ventas'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -45,7 +45,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\Api\PosController::store
-* @see app/Http/Controllers/Api/PosController.php:17
+* @see app/Http/Controllers/Api/PosController.php:19
 * @route '/api/pos/ventas'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

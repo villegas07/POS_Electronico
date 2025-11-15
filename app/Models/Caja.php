@@ -15,6 +15,7 @@ class Caja extends Model
         'usuario_id',
         'monto_inicial',
         'monto_final',
+        'saldo_actual',
         'total_ventas',
         'total_devoluciones',
         'fecha_apertura',
@@ -27,6 +28,7 @@ class Caja extends Model
     protected $casts = [
         'monto_inicial' => 'decimal:2',
         'monto_final' => 'decimal:2',
+        'saldo_actual' => 'decimal:2',
         'total_ventas' => 'decimal:2',
         'total_devoluciones' => 'decimal:2',
         'diferencia' => 'decimal:2',

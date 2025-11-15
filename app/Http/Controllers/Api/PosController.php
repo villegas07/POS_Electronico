@@ -8,6 +8,8 @@ use App\Models\Stock;
 use App\Models\StockMovimiento;
 use App\Models\Venta;
 use App\Models\VentaItem;
+use App\Models\Caja;
+use App\Models\CajaMovimiento;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -39,6 +41,17 @@ class PosController extends Controller
                 'impuesto' => 0,
                 'estado' => 'facturado',
             ]);
+
+            // Obtener caja activa del usuario
+            $cajaActiva = Caja::where('usuario_id', $venta->usuario_id)
+                ->where('estado', 'abierta')
+                ->first();
+
+            // Asignar caja a la venta si existe
+            if ($cajaActiva) {
+                $venta->caja_id = $cajaActiva->id;
+                $venta->save();
+            };
 
 
             // load client if any to check tax exemption
@@ -109,6 +122,27 @@ class PosController extends Controller
 
             $venta->total = $total;
             $venta->save();
+
+            // Registrar movimiento en caja si existe
+            if ($cajaActiva) {
+                $saldoAnterior = $cajaActiva->saldo_actual ?? 0;
+                $saldoNuevo = $saldoAnterior + $total;
+
+                CajaMovimiento::create([
+                    'caja_id' => $cajaActiva->id,
+                    'tipo' => 'venta',
+                    'descripcion' => "Venta #{$venta->id}",
+                    'monto' => $total,
+                    'referencia_id' => $venta->id,
+                    'referencia_tipo' => 'venta',
+                ]);
+
+                // Actualizar saldo y total de ventas en caja
+                $cajaActiva->update([
+                    'saldo_actual' => $saldoNuevo,
+                    'total_ventas' => ($cajaActiva->total_ventas ?? 0) + $total,
+                ]);
+            }
 
             // handle payments if provided
             if (!empty($data['payments'])) {

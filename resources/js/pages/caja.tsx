@@ -20,6 +20,7 @@ interface Caja {
     usuario_id: number;
     monto_inicial: number;
     monto_final?: number;
+    saldo_actual: number;
     total_ventas: number;
     total_devoluciones: number;
     diferencia?: number;
@@ -40,6 +41,7 @@ interface CajaResponse {
 export default function CajaPage() {
     const [cajaActiva, setCajaActiva] = useState<Caja | null>(null);
     const [cajas, setCajas] = useState<Caja[]>([]);
+    const [movimientos, setMovimientos] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     const [showCerrarModal, setShowCerrarModal] = useState(false);
     const [notification, setNotification] = useState<{
@@ -91,7 +93,13 @@ export default function CajaPage() {
             });
             if (response.ok) {
                 const data = await response.json();
-                setCajaActiva(data);
+                if (data && data.caja) {
+                    setCajaActiva(data.caja);
+                    setMovimientos(data.movimientos || []);
+                } else {
+                    setCajaActiva(null);
+                    setMovimientos([]);
+                }
             }
         } catch (error) {
             console.error('Error al obtener caja activa:', error);
@@ -218,6 +226,13 @@ export default function CajaPage() {
         console.log('CajaPage mounted, fetching data...');
         fetchCajaActiva();
         fetchCajas();
+
+        // Actualizar caja activa cada 3 segundos para reflejar cambios en tiempo real
+        const interval = setInterval(() => {
+            fetchCajaActiva();
+        }, 3000);
+
+        return () => clearInterval(interval);
     }, []);
 
     const montoTeórico = cajaActiva
@@ -250,7 +265,7 @@ export default function CajaPage() {
                 {cajaActiva && (
                     <div className="space-y-6">
                         {/* Estadísticas */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                             <Card className="border-l-4 border-l-green-500 p-4">
                                 <p className="text-gray-600 text-sm font-semibold">
                                     MONTO INICIAL
@@ -261,6 +276,16 @@ export default function CajaPage() {
                                 <p className="text-xs text-gray-500 mt-2">
                                     {formatDate(cajaActiva.fecha_apertura)}
                                 </p>
+                            </Card>
+
+                            <Card className="border-l-4 border-l-purple-500 p-4">
+                                <p className="text-gray-600 text-sm font-semibold">
+                                    SALDO ACTUAL
+                                </p>
+                                <p className="text-2xl font-bold text-purple-600 mt-1">
+                                    ${formatMoney(cajaActiva.saldo_actual || 0)}
+                                </p>
+                                <p className="text-xs text-gray-500 mt-2">En tiempo real</p>
                             </Card>
 
                             <Card className="border-l-4 border-l-blue-500 p-4">
@@ -301,6 +326,69 @@ export default function CajaPage() {
                                 Actualizar
                             </Button>
                         </div>
+
+                        {/* Movimientos de Caja */}
+                        {movimientos.length > 0 && (
+                            <Card className="p-6">
+                                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                                    <div className="w-3 h-3 bg-blue-600 rounded-full"></div>
+                                    Movimientos del Día
+                                </h3>
+                                <div className="overflow-x-auto">
+                                    <table className="w-full text-sm">
+                                        <thead className="bg-gray-50 border-b">
+                                            <tr>
+                                                <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                                                    Hora
+                                                </th>
+                                                <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                                                    Tipo
+                                                </th>
+                                                <th className="text-left py-3 px-4 font-semibold text-gray-700">
+                                                    Descripción
+                                                </th>
+                                                <th className="text-right py-3 px-4 font-semibold text-gray-700">
+                                                    Monto
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {movimientos.map((mov: any) => (
+                                                <tr key={mov.id} className="border-b hover:bg-gray-50">
+                                                    <td className="py-3 px-4 text-gray-700">
+                                                        {new Date(mov.created_at).toLocaleTimeString('es-ES', {
+                                                            hour: '2-digit',
+                                                            minute: '2-digit',
+                                                        })}
+                                                    </td>
+                                                    <td className="py-3 px-4">
+                                                        <span
+                                                            className={`inline-block px-2 py-1 text-xs font-semibold rounded ${
+                                                                mov.tipo === 'venta'
+                                                                    ? 'bg-green-100 text-green-800'
+                                                                    : mov.tipo === 'apertura'
+                                                                      ? 'bg-blue-100 text-blue-800'
+                                                                      : mov.tipo === 'devolución'
+                                                                        ? 'bg-orange-100 text-orange-800'
+                                                                        : 'bg-gray-100 text-gray-800'
+                                                            }`}
+                                                        >
+                                                            {mov.tipo.charAt(0).toUpperCase() + mov.tipo.slice(1)}
+                                                        </span>
+                                                    </td>
+                                                    <td className="py-3 px-4 text-gray-700">
+                                                        {mov.descripcion}
+                                                    </td>
+                                                    <td className="py-3 px-4 text-right font-semibold text-gray-900">
+                                                        ${formatMoney(mov.monto)}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </Card>
+                        )}
                     </div>
                 )}
 

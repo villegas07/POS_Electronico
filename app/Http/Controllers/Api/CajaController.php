@@ -25,7 +25,14 @@ class CajaController extends \Illuminate\Routing\Controller
             return response()->json(null);
         }
 
-        return response()->json($cajaActiva);
+        $movimientos = $cajaActiva->movimientos()
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return response()->json([
+            'caja' => $cajaActiva,
+            'movimientos' => $movimientos,
+        ]);
     }
 
     /**
@@ -55,6 +62,7 @@ class CajaController extends \Illuminate\Routing\Controller
             $caja = Caja::create([
                 'usuario_id' => Auth::id(),
                 'monto_inicial' => $validated['monto_inicial'],
+                'saldo_actual' => $validated['monto_inicial'],
                 'fecha_apertura' => now(),
                 'estado' => 'abierta',
                 'observaciones' => $validated['observaciones'] ?? null,

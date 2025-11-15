@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('usuario_id')->constrained('users')->onDelete('restrict');
             $table->decimal('monto_inicial', 10, 2)->default(0);
             $table->decimal('monto_final', 10, 2)->nullable();
+            $table->decimal('saldo_actual', 10, 2)->default(0);
             $table->decimal('total_ventas', 10, 2)->default(0);
             $table->decimal('total_devoluciones', 10, 2)->default(0);
             $table->decimal('diferencia', 10, 2)->nullable();
